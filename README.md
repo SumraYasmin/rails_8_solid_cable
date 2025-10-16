@@ -2,9 +2,6 @@
 
 A modern Rails 8 application for managing tasks with **real-time messaging** powered by Solid Cable and Turbo Streams. Post messages on tasks and see them appear instantly for all users without page refresh.
 
-## 🎥 Demo Video
-
-
 ## ✨ Features
 
 - **Task Management** - Full CRUD operations for tasks
