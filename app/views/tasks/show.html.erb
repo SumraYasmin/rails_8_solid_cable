@@ -1,38 +1,36 @@
 <div class="container">
   <h1><%= @task.title %></h1>
-  
+
   <p><%= @task.description %></p>
-  
+
   <div class="actions">
     <%= link_to "Back to Tasks", tasks_path, class: "btn btn-secondary" %>
     <%= link_to "Edit", edit_task_path(@task), class: "btn btn-primary" %>
     <%= button_to "Delete", @task, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
   </div>
-  
+
   <hr style="margin: 30px 0;">
-  
+
   <h2>Messages</h2>
-  
+
+  <%= turbo_stream_from @task, 'messages' %>
   <div id="messages">
     <% if @messages.any? %>
-      <% @messages.each do |message| %>
-        <div class="message">
-          <p class="message-content"><%= message.content %></p>
-          <div class="message-time">Posted <%= time_ago_in_words(message.created_at) %> ago</div>
-        </div>
-      <% end %>
+      <%= render @messages %>
     <% else %>
       <p>No messages yet. Be the first to post!</p>
     <% end %>
   </div>
-  
+
   <h3>Post a Message</h3>
-  <%= form_with(model: [@task, @message], local: true) do |form| %>
-    <div class="form-group">
-      <%= form.label :content, "Your Message" %>
-      <%= form.text_area :content, rows: 4, required: true %>
-    </div>
-    
-    <%= form.submit "Post Message", class: "btn btn-success" %>
-  <% end %>
+  <div id="new_message">
+    <%= form_with(model: [@task, @message], id: "new_message") do |form| %>
+      <div class="form-group">
+        <%= form.label :content, "Your Message" %>
+        <%= form.text_area :content, rows: 4, required: true %>
+      </div>
+
+      <%= form.submit "Post Message", class: "btn btn-success" %>
+    <% end %>
+  </div>
 </div>
